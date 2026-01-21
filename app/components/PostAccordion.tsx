@@ -223,7 +223,7 @@ export default function PostAccordion({ post }: { post: Post }) {
             <table style={{ width: '100%', marginTop: '40px', borderCollapse: 'collapse' }}>
               <tbody>
                 <tr>
-                  <td style={{ textAlign: 'center', padding: '30px 20px', backgroundColor: '#f0fdf4', borderRadius: '12px' }}>
+                  <td style={{ textAlign: 'center', padding: '30px 20px' }}>
                     <p style={{ fontSize: '20px', fontWeight: 'bold', color: '#000', margin: '0 0 20px 0' }}>
                       나의 얼굴에 숨겨진 운명이 궁금하다면?
                     </p>
@@ -245,15 +245,12 @@ export default function PostAccordion({ post }: { post: Post }) {
                                 textDecoration: 'none'
                               }}
                             >
-                              ▶ AI 관상 무료 분석 받기
+                              ▶ 내 관상 보러가기
                             </a>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <p style={{ marginTop: '15px', fontSize: '14px', color: '#666' }}>
-                      지금 바로 무료로 체험해보세요!
-                    </p>
                   </td>
                 </tr>
               </tbody>
