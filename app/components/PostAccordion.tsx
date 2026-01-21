@@ -28,6 +28,13 @@ export default function PostAccordion({ post }: { post: Post }) {
     let html = post.body;
     let imageIndex = 0;
 
+    // 관련 글 섹션 완전 제거 (## 관련 글 부터 끝까지 또는 다음 ## 까지)
+    html = html.replace(/\n*-{3,}\n*## 관련 글[\s\S]*?(?=\n## |$)/g, '');
+    html = html.replace(/\n*## 관련 글[\s\S]*?(?=\n## |$)/g, '');
+
+    // --- 구분선 제거하고 줄바꿈 두 줄로 대체
+    html = html.replace(/\n*-{3,}\n*/g, '\n\n\n\n');
+
     // 이미지 태그를 실제 이미지로 교체 (네이버 호환 크기: 500px)
     const imageTagPattern = /\*\*\[이미지:\s*([^\]]+)\]\*\*/g;
     html = html.replace(imageTagPattern, () => {
