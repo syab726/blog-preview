@@ -219,14 +219,8 @@ export default function PostAccordion({ post }: { post: Post }) {
               {post.hashtags.map((tag: string) => `#${tag}`).join(' ')}
             </div>
 
-            {/* CTA - 텍스트 링크 형식 (네이버 호환) */}
-            <div style={{
-              textAlign: 'center',
-              marginTop: '40px',
-              padding: '30px',
-              backgroundColor: '#f8f9fa',
-              borderRadius: '8px'
-            }}>
+            {/* CTA - 이미지 버튼 (네이버 호환) */}
+            <div style={{ textAlign: 'center', marginTop: '40px' }}>
               <p style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
@@ -236,20 +230,12 @@ export default function PostAccordion({ post }: { post: Post }) {
                 나의 얼굴에 숨겨진 운명이 궁금하다면?
               </p>
               <p style={{ margin: 0 }}>
-                <a
-                  href="https://facewisdom-ai.xyz?utm_source=naver_blog&utm_medium=organic&utm_campaign=blog_cta"
-                  style={{
-                    display: 'inline-block',
-                    padding: '15px 40px',
-                    backgroundColor: '#03C75A',
-                    color: '#fff',
-                    textDecoration: 'none',
-                    borderRadius: '30px',
-                    fontWeight: 'bold',
-                    fontSize: '16px'
-                  }}
-                >
-                  ▶ AI 관상 무료 분석 받기
+                <a href="https://facewisdom-ai.xyz?utm_source=naver_blog&utm_medium=organic&utm_campaign=blog_cta">
+                  <img
+                    src="https://img.shields.io/badge/AI%20%EA%B4%80%EC%83%81%20%EB%AC%B4%EB%A3%8C%20%EB%B6%84%EC%84%9D%20%EB%B0%9B%EA%B8%B0-03C75A?style=for-the-badge&logoColor=white&labelColor=03C75A"
+                    alt="AI 관상 무료 분석 받기"
+                    style={{ height: '50px' }}
+                  />
                 </a>
               </p>
               <p style={{
