@@ -1,9 +1,12 @@
-import Link from 'next/link';
 import { list } from '@vercel/blob';
+import PostAccordion from './components/PostAccordion';
 
 interface Post {
   id: string;
   title: string;
+  body: string;
+  hashtags: string[];
+  images: string[];
   createdAt: string;
   expiresAt: string;
 }
@@ -32,49 +35,43 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1 style={{ fontSize: '2em', marginBottom: '10px' }}>블로그 미리보기</h1>
-      <p style={{ color: '#666', marginBottom: '30px' }}>
-        네이버 블로그에 복사할 콘텐츠 임시 저장소
-      </p>
+    <main style={{
+      maxWidth: '900px',
+      margin: '0 auto',
+      padding: '20px',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕", sans-serif',
+      backgroundColor: '#f5f5f5',
+      minHeight: '100vh'
+    }}>
+      <div style={{
+        backgroundColor: '#fff',
+        padding: '20px 30px',
+        borderRadius: '8px',
+        marginBottom: '20px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+      }}>
+        <h1 style={{ fontSize: '1.5em', marginBottom: '5px', color: '#333' }}>블로그 콘텐츠 관리</h1>
+        <p style={{ color: '#666', margin: 0, fontSize: '0.9em' }}>
+          클릭하여 펼치고 → 복사 → 네이버 블로그에 붙여넣기 → 완료 버튼
+        </p>
+      </div>
 
       {posts.length === 0 ? (
         <div style={{
-          padding: '40px',
+          padding: '60px 40px',
           textAlign: 'center',
-          background: '#f5f5f5',
-          borderRadius: '8px'
+          background: '#fff',
+          borderRadius: '8px',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
         }}>
-          <p style={{ color: '#666' }}>등록된 포스트가 없습니다.</p>
+          <p style={{ color: '#999', fontSize: '1.1em' }}>등록된 콘텐츠가 없습니다.</p>
         </div>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {posts.map((post: Post) => {
-            const daysLeft = Math.ceil(
-              (new Date(post.expiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-            );
-
-            return (
-              <li key={post.id} style={{
-                border: '1px solid #ddd',
-                padding: '20px',
-                marginBottom: '15px',
-                borderRadius: '8px',
-                background: '#fff'
-              }}>
-                <Link href={`/post/${post.id}`} style={{ textDecoration: 'none', color: '#333' }}>
-                  <h2 style={{ margin: 0, fontSize: '1.3em' }}>{post.title}</h2>
-                  <p style={{ color: '#666', margin: '10px 0 0', fontSize: '0.9em' }}>
-                    생성: {new Date(post.createdAt).toLocaleDateString('ko-KR')} |
-                    <span style={{ color: daysLeft <= 2 ? '#dc2626' : '#666' }}>
-                      {' '}{daysLeft}일 후 삭제
-                    </span>
-                  </p>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <div>
+          {posts.map((post: Post) => (
+            <PostAccordion key={post.id} post={post} />
+          ))}
+        </div>
       )}
     </main>
   );
