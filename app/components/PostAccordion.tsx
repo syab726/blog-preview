@@ -72,25 +72,24 @@ export default function PostAccordion({ post }: { post: Post }) {
     }
   };
 
-  const handleComplete = async () => {
-    if (!confirm('게시 완료하셨나요? 5일 후 이 콘텐츠가 삭제됩니다.')) {
+  const handleDelete = async () => {
+    if (!confirm('삭제할까요?')) {
       return;
     }
 
     setIsCompleting(true);
     try {
-      const response = await fetch(`/api/posts/${post.id}/complete`, {
-        method: 'POST',
+      const response = await fetch(`/api/posts/${post.id}`, {
+        method: 'DELETE',
       });
 
       if (response.ok) {
         setIsDeleted(true);
-        alert('완료 처리되었습니다. 5일 후 자동 삭제됩니다.');
       } else {
-        alert('오류가 발생했습니다.');
+        alert('삭제 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      alert('오류가 발생했습니다.');
+      alert('삭제 중 오류가 발생했습니다.');
     } finally {
       setIsCompleting(false);
     }
@@ -168,21 +167,21 @@ export default function PostAccordion({ post }: { post: Post }) {
               전체 복사하기
             </button>
             <button
-              onClick={handleComplete}
+              onClick={handleDelete}
               disabled={isCompleting}
               style={{
                 flex: 1,
                 padding: '12px 20px',
-                backgroundColor: isCompleting ? '#ccc' : '#5c6bc0',
+                backgroundColor: isCompleting ? '#ccc' : '#e53935',
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',
-                fontSize: '1em',
+                fontSize: '0.9em',
                 fontWeight: 'bold',
                 cursor: isCompleting ? 'not-allowed' : 'pointer'
               }}
             >
-              {isCompleting ? '처리중...' : '게시 완료'}
+              {isCompleting ? '삭제중...' : '블로그에 게시하여 삭제합니다'}
             </button>
           </div>
 
