@@ -3,20 +3,27 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { title, body, hashtags, images, topicId } = await request.json();
+    const { title, body, hashtags, images, imageUrls, topicId, id } = await request.json();
 
-    const postId = `${topicId}-${Date.now()}`;
+    const postId = id || `${topicId}-${Date.now()}`;
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-    const imageUrls: string[] = [];
-    if (images && images.length > 0) {
+    // imageUrls가 이미 있으면 그대로 사용 (이미지가 미리 업로드된 경우)
+    let finalImageUrls: string[] = imageUrls || [];
+
+    // images 배열이 있고 imageUrls가 없으면 기존 방식으로 업로드
+    if ((!imageUrls || imageUrls.length === 0) && images && images.length > 0) {
       for (let i = 0; i < images.length; i++) {
-        const imageBuffer = Buffer.from(images[i].data, 'base64');
-        const blob = await put(`posts/${postId}/image-${i + 1}.jpg`, imageBuffer, {
+        const imageData = images[i].data || images[i];
+        const base64Data = typeof imageData === 'string' && imageData.includes('base64,')
+          ? imageData.split('base64,')[1]
+          : imageData;
+        const imageBuffer = Buffer.from(base64Data, 'base64');
+        const blob = await put(`posts/${postId}/image-${i + 1}.png`, imageBuffer, {
           access: 'public',
-          contentType: 'image/jpeg',
+          contentType: 'image/png',
         });
-        imageUrls.push(blob.url);
+        finalImageUrls.push(blob.url);
       }
     }
 
@@ -25,7 +32,7 @@ export async function POST(request: NextRequest) {
       title,
       body,
       hashtags,
-      images: imageUrls,
+      images: finalImageUrls,
       createdAt: new Date().toISOString(),
       expiresAt: expiresAt.toISOString(),
     };
