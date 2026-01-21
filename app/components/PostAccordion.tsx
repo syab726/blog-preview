@@ -41,7 +41,7 @@ export default function PostAccordion({ post }: { post: Post }) {
       if (imageIndex < post.images.length) {
         const imgUrl = post.images[imageIndex];
         imageIndex++;
-        return `<p style="text-align:center;"><img src="${imgUrl}" alt="관상 이미지" style="max-width:500px; width:100%; height:auto;" /></p>`;
+        return `<p style="text-align:center;"><img src="${imgUrl}" alt="관상 이미지" style="max-width:350px; width:100%; height:auto;" /></p>`;
       }
       return '';
     });
@@ -198,7 +198,7 @@ export default function PostAccordion({ post }: { post: Post }) {
           >
             {/* 제목 */}
             <h1 style={{
-              fontSize: '28px',
+              fontSize: '36px',
               fontWeight: 'bold',
               textAlign: 'center',
               color: '#000',
@@ -246,13 +246,13 @@ export default function PostAccordion({ post }: { post: Post }) {
                             <a
                               href="https://facewisdom-ai.xyz/gwansang?utm_source=naver_blog&utm_medium=organic&utm_campaign=blog_cta"
                               style={{
-                                color: '#ffffff',
+                                color: 'white',
                                 fontSize: '18px',
                                 fontWeight: 'bold',
                                 textDecoration: 'none'
                               }}
                             >
-                              ▶ 내 관상 보러가기
+                              <span style={{ color: 'white' }}>▶ 내 관상 보러가기</span>
                             </a>
                           </td>
                         </tr>
